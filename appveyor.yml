@@ -33,15 +33,21 @@ install:
 
 build_script:
 # setup the environmental variables to work within the installed cygwin toolchain
+- echo %time%
 - call C:\PX4\toolchain\setup-environment-variables.bat x
 # safe the repopath for switching to it in cygwin bash
+- echo %time%
 - for /f %%i in ('cygpath -u %%CD%%') do set repopath=%%i
 # fetch all submodules in parallel
+- echo %time%
 - call bash --login -c "cd $repopath && git submodule update --init --recursive --jobs=10"
 # make SITL
+- echo %time%
 - call bash --login -c "cd $repopath && make posix"
 # make pixracer to check NuttX build
+- echo %time%
 - call bash --login -c "cd $repopath && make px4fmu-v4_default"
+- echo %time%
 
 # Note: using bash --login is important
 # because otherwise certain things (like python; import numpy) do not work
